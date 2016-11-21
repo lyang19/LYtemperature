@@ -2,56 +2,58 @@
 \alias{linearcor}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-ahahaha
+Linear Correlation
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function examines and plots the linear correlation between 2 variables.
 }
 \usage{
-linearcor(x)
+linearcor(x,y,dataset,xmin,xmax,xby)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+\item{x}{the dependent variable in the model
+}
+\item{y}{the independent variable in the model
+}
+\item{dataset}{the data set used in the model
+}
+\item{xmin}{the minimum value of the dependent variable
+}
+\item{xmax}{the maximum value of the dependent variable
+}
+\item{xby}{the step size in linear model
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+This function does not specify x label, y label and the plot title. These need to be added later.
 }
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+Luoying Yang
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+##Use the data set 'mtcars' to try the function
 
 ## The function is currently defined as
-function (x)
-{
-  }
+linearcor<-function(x,y,dataset,xmin,xmax,xby){
+  plot(x,y)
+  lm1<-lm(formula(x~y),data = dataset)
+  summary(lm1)
+  xs<-seq(from=xmin,to=xmax,by=xby)
+  ys<-coef(lm1)[1]+coef(lm1)[2]*xs
+  lines(xs,ys,lty=1,lwd=2)
+  lines(loess.smooth(x=temperaturedata$Morning,temperaturedata$Breakfast), lty=2, lwd=2)
+  legend("topleft", lty=1:2, lwd=2, c("linear", "loess"))
 }
+x<-mtcars$mpg
+y<-mtcars$cyl
+xmin<-min(mtcar$mpg)
+xmax<-max(mtcar$mpg)
+xby<-(xmax-min)/10
+linearcor(x,y,xmin,xmax,xby)
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{linearcorrelation}% use one of  RShowDoc("KEYWORDS")
+

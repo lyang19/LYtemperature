@@ -2,10 +2,10 @@
 \alias{sumstat}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-ahahaha
+  Summary Statistics
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This calcualte mean, median, range and the standard deviation of each column of the input matrix/array/dataframe. It requires the input argument to be matrix/array/dataframe.
 }
 \usage{
 sumstat(x)
@@ -13,45 +13,40 @@ sumstat(x)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+The matrix/array/dataframe that needs to be calculated. If class(x) does not match these three data types the function will display a warning message.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\item{sumst}{Sumst is a matrix of the column means, column median, column range and column standard deviation.}
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
+
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+Luoying Yang
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+
+##Use the data set 'mtcars' to try the function
 
 ## The function is currently defined as
-function (x)
-{
+sumstat<-function(x){
+  if (class(x)!='matrix'|class(x)!='array'|class(x)!='data.frame'){
+  n<-ncol(x)
+  sumst<-matrix(nrow = 4, ncol = n)
+  for (i in 1:n) {
+    sumst[1,i]<-mean(x[,i],na.rm = TRUE)
+    sumst[2,i]<-median(x[,i],na.rm = TRUE)
+    sumst[3,i]<-max(x[,i])-min(x[,i],na.rm = TRUE)
+    sumst[4,i]<-sd(x[,i],na.rm = TRUE)
   }
+  rownames(sumst)<-c('mean','median','range','standard deviation')
+  return(sumst)
+  }
+  else
+  {print('WARNING: Your input is invalid.')}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+sumstat(mtcars)
+
+
+\keyword{summarystatistics}

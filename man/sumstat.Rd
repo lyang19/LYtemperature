@@ -5,7 +5,7 @@
   Summary Statistics
 }
 \description{
-This calcualte mean, median, range and the standard deviation of each column of the input matrix/array/dataframe. It requires the input argument to be matrix/array/dataframe.
+This function calcualtes mean, median, range and the standard deviation of each column of the input matrix/array/dataframe. It requires the input argument to be matrix/array/dataframe.
 }
 \usage{
 sumstat(x)

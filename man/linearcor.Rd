@@ -12,15 +12,15 @@ linearcor(x,y,dataset,xmin,xmax,xby)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{x}{the dependent variable in the model
+\item{x}{the independent variable in the model
 }
-\item{y}{the independent variable in the model
+\item{y}{the dependent variable in the model
 }
 \item{dataset}{the data set used in the model
 }
-\item{xmin}{the minimum value of the dependent variable
+\item{xmin}{the minimum value of the independent variable
 }
-\item{xmax}{the maximum value of the dependent variable
+\item{xmax}{the maximum value of the independent variable
 }
 \item{xby}{the step size in linear model
 }

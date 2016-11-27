@@ -30,8 +30,7 @@ Luoying Yang
 \examples{
 ##Use the 'sleep' data set to try the function
 str(sleep)
-##
-There are 2 columns of data that are factor. The function will convert them to be numeric
+##There are 2 columns of data that are factor. The function will convert them to be numeric
 ## The function is currently defined as
 convertnumeric<-function (x)
 {

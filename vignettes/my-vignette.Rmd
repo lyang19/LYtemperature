@@ -8,51 +8,44 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+###Introduction
+The package 'LYTemperature' is built to display, summarize, and	analyze the temperature data I collected for the body temperature study. I am interested in knowing whether my body temperature changes significantly after eating and after a full day of acitivities, therefore I measured and collected my body temperature at 3 time points of the day: in the morning (immediately after waking), after breakfast, and at the night (right before go to bed). The data will be compared using t test to see if there's a significant difference. Because the analyses required are very simple, I only developed 3 functions in the package. The 1st function convert entries in a matrix/array/dataframe into numeric values, the 2nd function provides a summary statistics of each subgroup in my data set, and the 3rd function examines and plot the linear correlation between 2 variables. In addition to this package, packages that used to read in google sheet is also required.
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(LYtemperature)
+library(googlesheets)
+library(httpuv)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+###convertnumeric
+convertnumeric(x) converts entries in the dataset to be numeric values. The function is simple but it saves a lot of code writing, because some data cannot be comverted into numeric directly, they need to be converted into character first.It requires the input argument to be matrix/array/dataframe. If argument is of other class type, the function will return 'Invalid input' and does not proceed with the input at all. This function's argument does not have a default value. 
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+temp<-gs_url('https://docs.google.com/spreadsheets/d/1GQ5Lfg0SlbH6m61Rfe2SBQ0y9V2RMHa0C0LogtgXJkM/edit?usp=sharing')
+temperaturedata<-gs_read(temp)
+temperaturedata<-temperaturedata[-1,-1]
+temperaturedata<-as.data.frame(temperaturedata)
+temperaturedata<-convertnumeric(temperaturedata)
+colnames(temperaturedata)<-c('Morning','Breakfast','Night')
 ```
 
-Also a quote using `>`:
+###sumstat
+This function calcualtes mean, median, range and the standard deviation of each column of the input matrix/array/dataframe. If there are a lot of columns in the dataframe (which means there data have a lot of categories and you want the summary statistics of each category), this function saves a considerate amount of time to write repetitive codes. It requires the input argument to be matrix/array/dataframe. If argument is of other class type, the function will return 'Invalid input' and does not proceed with the input at all. This function's argument does not have a default value. 
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r}
+summarystat<-sumstat(temperaturedata)
+colnames(summarystat)<-c('Morning','After Breakfast','Night')
+library(knitr)
+kable(summarystat)
+```
+
+###linearcor
+This function examines and plots the linear correlation between 2 variables. It requires 6 inputs: independent variable x, dependent variable y, dataset, the minimum value of the independent variable xmin, maximum value of the independent variable xmax and the step size in linear model xby. x, y and dataset are used for the scatter plot and linear model, and xmin, xmax and xby are used to plot the linear best-fit line and loose line. It is very efficient in producing informative scatter plot. This function's arguments do not have default value. 
+
+For example, we can use the function to generate scatter plot to see the linear relationship between morning temperature and after breakfast temperature
+```{r}
+linearcor(x=temperaturedata$Morning, y=temperaturedata$Breakfast,dataset = temperaturedata,xmin = 35,xmax = 36.5,xby = 0.1)
+title(xlab = 'Morning (celsius degrees)', ylab ='After Breakfast (celsius degrees)', main = 'Temperature change from morning to after breakfast')
+```
+

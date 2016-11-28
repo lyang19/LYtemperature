@@ -1,5 +1,5 @@
 \name{convertnumeric}
-\alias{Convertnumeric}
+\alias{convertnumeric}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Convert into numeric values
@@ -56,7 +56,4 @@ str(lh)
 convertnumeric(lh)
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{convertnumericvalue}
 

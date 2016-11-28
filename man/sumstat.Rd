@@ -47,6 +47,5 @@ sumstat<-function(x){
   {print('WARNING: Your input is invalid.')}
 }
 sumstat(mtcars)
+}
 
-
-\keyword{summarystatistics}

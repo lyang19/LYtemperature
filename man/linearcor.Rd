@@ -49,11 +49,12 @@ linearcor<-function(x,y,dataset,xmin,xmax,xby){
 }
 x<-mtcars$mpg
 y<-mtcars$cyl
-xmin<-min(mtcar$mpg)
-xmax<-max(mtcar$mpg)
+xmin<-min(mtcars$mpg)
+xmax<-max(mtcars$mpg)
+xmin<-as.character(xmin)
+xmin<-as.numeric(xmin)
+xmax<-as.character(xmax)
+xmax<-as.numeric(xmax)
 xby<-(xmax-min)/10
 linearcor(x,y,xmin,xmax,xby)
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{linearcorrelation}% use one of  RShowDoc("KEYWORDS")
-
+}

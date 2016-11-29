@@ -44,7 +44,7 @@ linearcor<-function(x,y,dataset,xmin,xmax,xby){
   xs<-seq(from=xmin,to=xmax,by=xby)
   ys<-coef(lm1)[1]+coef(lm1)[2]*xs
   lines(xs,ys,lty=1,lwd=2)
-  lines(loess.smooth(x=temperaturedata$Morning,temperaturedata$Breakfast), lty=2, lwd=2)
+  lines(loess.smooth(x,y), lty=2, lwd=2)
   legend("topleft", lty=1:2, lwd=2, c("linear", "loess"))
 }
 x<-mtcars$mpg
@@ -55,6 +55,6 @@ xmin<-as.character(xmin)
 xmin<-as.numeric(xmin)
 xmax<-as.character(xmax)
 xmax<-as.numeric(xmax)
-xby<-(xmax-min)/10
-linearcor(x,y,xmin,xmax,xby)
+xby<-(xmax-xmin)/10
+linearcor(x,y,dataset=mtcars,xmin,xmax,xby)
 }

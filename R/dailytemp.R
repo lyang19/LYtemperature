@@ -42,7 +42,7 @@ linearcor<-function(x,y,dataset,xmin,xmax,xby){
   xs<-seq(from=xmin,to=xmax,by=xby)
   ys<-coef(lm1)[1]+coef(lm1)[2]*xs
   lines(xs,ys,lty=1,lwd=2)
-  lines(loess.smooth(x=temperaturedata$Morning,temperaturedata$Breakfast), lty=2, lwd=2)
+  lines(loess.smooth(x,y), lty=2, lwd=2)
   legend("topleft", lty=1:2, lwd=2, c("linear", "loess"))
 }
 

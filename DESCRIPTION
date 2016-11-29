@@ -1,12 +1,12 @@
 Package: LYtemperature
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Temperature Data Analysis
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Luoying Yang
+Maintainer: Luoying Yang <luoying_yang@urmc.rochester.edu>
+Description: The package 'LYTemperature' is built to display, summarize, and analyze the temperature data I collected for the body temperature study.
+License: CC0
 LazyData: TRUE
 Suggests: knitr,
-    rmarkdown
+    rmarkdown, googlesheets, httpuv
 VignetteBuilder: knitr

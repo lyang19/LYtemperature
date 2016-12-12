@@ -40,6 +40,17 @@ library(knitr)
 kable(summarystat)
 ```
 
+From the displayed result, we can see that the means for all three groups are very close. No trend of change can be observed. The range of temperature at night is slightly greater than at morning and after breakfast, possibly due to different amount of activities being done during the day. The standard distribution indicates the temperature distribution is not spread out in each group.
+One thing worth mentioning is that the median for all groups is the same--35.8 degrees. I think this is my baseline temperature.
+
+###Paired t test between morning temperature and after breakfast termperature
+Does body temperature change significantly after eating? A paired t test was done to calculate the significance of difference between 2 sets of temperature.
+```{r, echo=FALSE}
+t.test(temperaturedata$Morning,temperaturedata$Breakfast,paired = TRUE)
+```
+
+p value>0.05, so there is no significant change of temperature after eating.
+
 ###linearcor
 This function examines and plots the linear correlation between 2 variables. It requires 6 inputs: independent variable x, dependent variable y, dataset, the minimum value of the independent variable xmin, maximum value of the independent variable xmax and the step size in linear model xby. x, y and dataset are used for the scatter plot and linear model, and xmin, xmax and xby are used to plot the linear best-fit line and loose line. It is very efficient in producing informative scatter plot. This function's arguments do not have default value. 
 
@@ -49,3 +60,19 @@ linearcor(x=temperaturedata$Morning, y=temperaturedata$Breakfast,dataset = tempe
 title(xlab = 'Morning (celsius degrees)', ylab ='After Breakfast (celsius degrees)', main = 'Temperature change from morning to after breakfast')
 ```
 
+The linear model and the plot suggest that there's a positive linear correlation between the morning temperature and the after breakfast temperature. It means that if I have high temperature when I wake, I tend to have high temperature after breakfast, but not necessary higher than the morning temperature. 
+
+###Paired t test between morning temperature and night termperature
+Does body temperature change significantly after a full day of activity?
+```{r, echo=FALSE}
+t.test(temperaturedata$Morning,temperaturedata$Night,paired = TRUE)
+```
+
+p value>0.05, so there is no significant change of temperature after a full day of activity.
+
+```{r,fig.height=4,fig.width=4}
+linearcor(x=temperaturedata$Morning, y=temperaturedata$Night,dataset = temperaturedata,xmin = 35,xmax = 36.5,xby = 0.1)
+title(xlab = 'Morning (celsius degrees)', ylab ='Night (celsius degrees)', main = 'Temperature change from morning to Night')
+```
+
+The R-squared suggests that the trend is weaker than that between the morning and breakfast, but a positive correlation still exists between the morning and night temperature. The weaker trend is probably a result of longer time interval and a larger amount of activities between 2 temperature taking points.
